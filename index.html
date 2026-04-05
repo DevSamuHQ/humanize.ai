@@ -2,33 +2,17 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Free AI Humanizer Chrome Extension. Convert AI text to human-like writing instantly. Built by GhostWriter_Samu.">
-    <meta name="keywords" content="AI Humanizer, Bypass AI detection, Free AI Tool, Chrome Extension, Student AI">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humanize.ai | Write Like a Human</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f111a;
-        }
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.15) 0%, rgba(15, 17, 26, 0) 50%);
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f111a; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.15) 0%, rgba(15, 17, 26, 0) 50%); }
+        .lang-dropdown { display: none; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+        .lang-dropdown.show { display: block; opacity: 1; transform: translateY(0px); }
     </style>
 </head>
 <body class="text-gray-200 overflow-x-hidden">
@@ -38,38 +22,53 @@
         <div class="absolute bottom-[10%] right-[-5%] w-[400px] h-[400px] bg-pink-600/10 blur-[100px] rounded-full"></div>
     </div>
 
-    <nav class="relative z-10 max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+    <nav class="relative z-50 max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
         <div class="text-2xl font-extrabold tracking-tighter italic text-white">
             HUMANIZE<span class="text-indigo-400">.AI</span>
         </div>
-        <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-widest text-gray-400">
-            <a href="#features" class="hover:text-indigo-400 transition">Why Us</a>
-            <a href="#how-to" class="hover:text-indigo-400 transition">Install</a>
-            <a href="#pricing" class="hover:text-indigo-400 transition">Pricing</a>
+        
+        <div class="flex items-center space-x-8">
+            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-widest text-gray-400">
+                <a href="#features" data-t="nav1" class="hover:text-indigo-400 transition">Why Us</a>
+                <a href="#how-to" data-t="nav2" class="hover:text-indigo-400 transition">Install</a>
+            </div>
+
+            <div class="relative">
+                <button id="langBtn" class="glass px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold border border-white/10 hover:bg-white/5 transition">
+                    <i data-lucide="languages" class="w-4 h-4 text-indigo-400"></i>
+                    <span id="activeLang">English</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i>
+                </button>
+                <div id="langMenu" class="lang-dropdown absolute right-0 mt-3 w-40 glass rounded-2xl p-2 z-50 border border-white/10">
+                    <button onclick="changeLang('en')" class="w-full text-left px-4 py-2 hover:bg-white/5 rounded-xl text-xs font-bold transition">🇺🇸 English</button>
+                    <button onclick="changeLang('hu')" class="w-full text-left px-4 py-2 hover:bg-white/5 rounded-xl text-xs font-bold transition">🇭🇺 Magyar</button>
+                    <button onclick="changeLang('de')" class="w-full text-left px-4 py-2 hover:bg-white/5 rounded-xl text-xs font-bold transition">🇩🇪 Deutsch</button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <section class="relative z-10 pt-20 pb-32 px-6 text-center max-w-5xl mx-auto hero-gradient">
         <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-[10px] font-bold uppercase tracking-widest mb-8 animate-pulse">
             <i data-lucide="sparkles" class="w-3 h-3"></i>
-            <span>Beta 1.1 Live Now</span>
+            <span data-t="badge">Beta 1.1 Live Now</span>
         </div>
         
         <h1 class="text-6xl md:text-8xl font-black text-white mb-8 tracking-tight leading-none">
-            Write Like a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Human</span>,<br>Not a Robot.
+            <span data-t="heroTitle1">Write Like a</span> <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400" data-t="heroTitle2">Human</span>,<br><span data-t="heroTitle3">Not a Robot.</span>
         </h1>
         
-        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed" data-t="heroSub">
             The AI-powered Chrome extension that gives your essays the human touch. Built for students, by a student.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="extension.zip" download class="w-full sm:w-auto px-10 py-5 bg-white text-indigo-950 font-black rounded-2xl shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:scale-105 transition-all flex items-center justify-center gap-3">
                 <i data-lucide="download"></i>
-    DOWNLOAD BETA (.ZIP)
+                <span data-t="ctaMain">DOWNLOAD BETA (.ZIP)</span>
             </a>
             <a href="#how-to" class="w-full sm:w-auto px-10 py-5 glass text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-                Setup Guide <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span data-t="ctaSub">Setup Guide</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
         </div>
     </section>
@@ -80,57 +79,55 @@
                 <div class="w-14 h-14 bg-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                     <i data-lucide="zap"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight">Natural Flow</h3>
-                <p class="text-gray-400 leading-relaxed">Ditch the rhythmic AI monotone. We mix sentence lengths to mimic real human thought patterns.</p>
+                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight" data-t="f1Title">Natural Flow</h3>
+                <p class="text-gray-400 leading-relaxed" data-t="f1Desc">Ditch the rhythmic AI monotone. We mix sentence lengths to mimic real human thought patterns.</p>
             </div>
 
             <div class="glass p-10 rounded-[2.5rem] group hover:border-pink-500/50 transition-all">
                 <div class="w-14 h-14 bg-pink-500/20 text-pink-400 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                     <i data-lucide="shield-alert"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight">No AI Slop</h3>
-                <p class="text-gray-400 leading-relaxed">Instantly scrubs giveaway words like <span class="text-pink-300 italic">"delve," "tapestry,"</span> and <span class="text-pink-300 italic">"moreover."</span></p>
+                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight" data-t="f2Title">No AI Slop</h3>
+                <p class="text-gray-400 leading-relaxed" data-t="f2Desc">Instantly scrubs giveaway words like "delve," "tapestry," and "moreover."</p>
             </div>
 
             <div class="glass p-10 rounded-[2.5rem] group hover:border-purple-500/50 transition-all">
                 <div class="w-14 h-14 bg-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                     <i data-lucide="globe"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight">Multi-language</h3>
-                <p class="text-gray-400 leading-relaxed">Works perfectly in Hungarian, English, and 50+ other languages. Context-aware rewriting.</p>
+                <h3 class="text-xl font-extrabold text-white mb-4 uppercase tracking-tight" data-t="f3Title">Multi-language</h3>
+                <p class="text-gray-400 leading-relaxed" data-t="f3Desc">Works perfectly in Hungarian, English, and German. Context-aware rewriting.</p>
             </div>
         </div>
     </section>
 
     <section id="how-to" class="relative z-10 py-24 px-6 bg-white/[0.01]">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-black text-center text-white mb-16 tracking-tight">How to Install</h2>
-            <div class="space-y-4">
+            <h2 class="text-4xl font-black text-center text-white mb-16 tracking-tight" data-t="guideTitle">How to Install</h2>
+            <div class="space-y-4 text-sm md:text-lg font-bold">
                 <div class="glass p-6 rounded-3xl flex items-center gap-8">
                     <span class="text-4xl font-black text-indigo-500/40">01</span>
-                    <p class="text-lg font-bold">Download the <span class="text-white underline underline-offset-4">ZIP folder</span> and extract it to your desktop.</p>
+                    <p data-t="s1">Download the ZIP folder and extract it to your desktop.</p>
                 </div>
                 <div class="glass p-6 rounded-3xl flex items-center gap-8">
                     <span class="text-4xl font-black text-indigo-500/40">02</span>
-                    <p class="text-lg font-bold">Open <code class="bg-indigo-500/20 px-2 py-1 rounded text-indigo-300">chrome://extensions/</code> and enable 'Developer Mode'.</p>
+                    <p data-t="s2">Open chrome://extensions/ and enable 'Developer Mode'.</p>
                 </div>
                 <div class="glass p-6 rounded-3xl flex items-center gap-8">
                     <span class="text-4xl font-black text-indigo-500/40">03</span>
-                    <p class="text-lg font-bold">Click <span class="text-white border-b-2 border-indigo-500">Load Unpacked</span> and select the Humanize.ai folder.</p>
+                    <p data-t="s3">Click Load Unpacked and select the extension folder.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="relative z-10 py-32 px-6">
-        <div class="max-w-3xl mx-auto glass p-20 rounded-[4rem] text-center border-indigo-500/20 relative overflow-hidden">
-            <div class="absolute -top-20 -left-20 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full"></div>
+        <div class="max-w-3xl mx-auto glass p-20 rounded-[4rem] text-center border-indigo-500/20">
             <h2 class="text-7xl font-black text-white mb-4 tracking-tighter italic">100% FREE</h2>
-            <p class="text-indigo-300 uppercase tracking-[0.4em] font-bold text-xs mb-10">Limited Alpha Access</p>
-            
+            <p class="text-indigo-300 uppercase tracking-[0.4em] font-bold text-xs mb-10" data-t="priceSub">Limited Alpha Access</p>
             <div class="flex flex-col items-center gap-4 text-gray-400 font-medium">
-                <div class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i> No Credit Card Required</div>
-                <div class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i> Unlimited Daily Uses</div>
+                <div class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i> <span data-t="p1">No Credit Card Required</span></div>
+                <div class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i> <span data-t="p2">Unlimited Daily Uses</span></div>
             </div>
         </div>
     </section>
@@ -143,24 +140,61 @@
     </footer>
 
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Simple scroll animation for the "glass" cards
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-                    entry.target.classList.remove('opacity-0', 'translate-y-10');
-                }
-            });
-        }, observerOptions);
+        const translations = {
+            en: {
+                active: "English", nav1: "Why Us", nav2: "Install", badge: "Beta 1.1 Live Now",
+                heroTitle1: "Write Like a", heroTitle2: "Human", heroTitle3: "Not a Robot.",
+                heroSub: "The AI-powered Chrome extension that gives your essays the human touch. Built for students, by a student.",
+                ctaMain: "DOWNLOAD BETA (.ZIP)", ctaSub: "Setup Guide",
+                f1Title: "Natural Flow", f1Desc: "Ditch the rhythmic AI monotone. We mix sentence lengths to mimic real human thought patterns.",
+                f2Title: "No AI Slop", f2Desc: "Instantly scrubs giveaway words like 'delve,' 'tapestry,' and 'moreover.'",
+                f3Title: "Multi-language", f3Desc: "Works perfectly in Hungarian, English, and German. Context-aware rewriting.",
+                guideTitle: "How to Install", s1: "Download the ZIP folder and extract it to your desktop.",
+                s2: "Open chrome://extensions/ and enable 'Developer Mode'.", s3: "Click Load Unpacked and select the extension folder.",
+                priceSub: "Limited Alpha Access", p1: "No Credit Card Required", p2: "Unlimited Daily Uses"
+            },
+            hu: {
+                active: "Magyar", nav1: "Miért mi?", nav2: "Telepítés", badge: "A Beta 1.1 már elérhető",
+                heroTitle1: "Írj úgy, mint egy", heroTitle2: "Ember", heroTitle3: "nem mint egy robot.",
+                heroSub: "Az AI-alapú Chrome bővítmény, amely emberi érintést ad a fogaidnak. Diákoktól, diákoknak.",
+                ctaMain: "BÉTA LETÖLTÉSE (.ZIP)", ctaSub: "Telepítési útmutató",
+                f1Title: "Természetes Flow", f1Desc: "Felejtsd el a monoton AI stílust. Variáljuk a mondathosszúságot a valódi emberi gondolkodás szerint.",
+                f2Title: "AI-mentes szöveg", f2Desc: "Azonnal kiszűri az olyan árulkodó szavakat, mint a 'továbbá' vagy az 'elmélyedni'.",
+                f3Title: "Többnyelvű", f3Desc: "Tökéletesen működik magyarul, angolul és németül. Kontextus-érzékeny újraírás.",
+                guideTitle: "Hogyan telepítsd?", s1: "Töltsd le a ZIP mappát és csomagold ki az asztalodra.",
+                s2: "Nyisd meg a chrome://extensions/ oldalt és kapcsold be a 'Fejlesztői módot'.", s3: "Kattints a 'Kicsomagolt bővítmény betöltése' gombra és válaszd ki a mappát.",
+                priceSub: "Limitált Alpha Hozzáférés", p1: "Nem kell bankkártya", p2: "Korlátlan napi használat"
+            },
+            de: {
+                active: "Deutsch", nav1: "Vorteile", nav2: "Installation", badge: "Beta 1.1 Jetzt Live",
+                heroTitle1: "Schreib wie ein", heroTitle2: "Mensch", heroTitle3: "nicht wie ein Roboter.",
+                heroSub: "Die KI-gestützte Chrome-Erweiterung, die deinen Aufsätzen eine menschliche Note verleiht. Von Studenten für Studenten.",
+                ctaMain: "BETA HERUNTERLADEN (.ZIP)", ctaSub: "Anleitung",
+                f1Title: "Natürlicher Fluss", f1Desc: "Verabschiede dich vom monotonen KI-Stil. Wir variieren Satzlängen für echten menschlichen Rhythmus.",
+                f2Title: "Kein KI-Slang", f2Desc: "Entfernt typische KI-Wörter wie 'vertiefen', 'Zusammenspiel' oder 'darüber hinaus'.",
+                f3Title: "Mehrsprachig", f3Desc: "Funktioniert perfekt auf Deutsch, Englisch und Ungarisch. Kontextbewusstes Umschreiben.",
+                guideTitle: "Installation", s1: "Lade den ZIP-Ordner herunter und entpacke ihn auf deinem Desktop.",
+                s2: "Öffne chrome://extensions/ und aktiviere den 'Entwicklermodus'.", s3: "Klicke auf 'Entpackte Erweiterung laden' und wähle den Ordner aus.",
+                priceSub: "Limitierter Alpha-Zugang", p1: "Keine Kreditkarte nötig", p2: "Unbegrenzte Nutzung"
+            }
+        };
 
-        document.querySelectorAll('.glass').forEach(el => {
-            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
-            observer.observe(el);
-        });
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
+
+        langBtn.onclick = (e) => { e.stopPropagation(); langMenu.classList.toggle('show'); };
+        window.onclick = () => langMenu.classList.remove('show');
+
+        function changeLang(lang) {
+            document.getElementById('activeLang').innerText = translations[lang].active;
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+            langMenu.classList.remove('show');
+        }
     </script>
 </body>
 </html>

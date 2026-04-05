@@ -8,6 +8,46 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* 1. Floating Animation for the Hero Title */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+.animate-float { 
+    animation: float 6s ease-in-out infinite; 
+}
+
+/* 2. Scroll Reveal: Initial state (Hidden) */
+.reveal { 
+    opacity: 0; 
+    transform: translateY(40px); 
+    transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); 
+}
+
+/* 3. Scroll Reveal: Active state (Visible) */
+.reveal.active { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+/* 4. Hover Lifting Effect for Cards */
+.glass {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+}
+
+/* 5. Pulsing Background Blobs */
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+}
+.bg-blob {
+    animation: pulse-slow 8s infinite alternate;
+}
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f111a; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.15) 0%, rgba(15, 17, 26, 0) 50%); }
@@ -195,6 +235,25 @@
             });
             langMenu.classList.remove('show');
         }
+        // Intersection Observer for Scroll Animations
+    const observerOptions = {
+        threshold: 0.15 // Trigger when 15% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: Stop observing once animated
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    // Attach observer to all elements with the "reveal" class
+    document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+    });
     </script>
 </body>
 </html>
